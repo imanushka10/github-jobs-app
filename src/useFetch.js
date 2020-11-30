@@ -1,5 +1,7 @@
 import React, { useReducer, useEffect } from "react"
 import axios from "axios"
+
+
 const ACTIONS = {
     MAKE_REQUEST: "make-request",
     GET_DATA: "get-data",
@@ -19,15 +21,15 @@ function reducer(state, action) {
 
 }
 
-export default function useFetcch(params, page) {
+export default function useFetchJobs(params, page) {
 
     const [state, dispatch] = useReducer(reducer, { jobs: [], loading: true })
 
     useEffect(() => {
-        const cancleToken = axios.CancelToken.source()
+        const cancelToken = axios.CancelToken.source()
         dispatch({ type: ACTIONS.MAKE_REQUEST })
         axios.get(BASE_URL, {
-            cancleToken: cancleToken.token,
+            cancelToken: cancelToken.token,
             params: { markdown: true, page: page, ...params }
         }).then(res => {
             dispatch({
@@ -35,11 +37,11 @@ export default function useFetcch(params, page) {
 
             })
         }).catch(e => {
-            if (axios.isCancle(e)) return
+            if (axios.isCancel(e)) return
             dispatch({ type: ACTIONS.Error, payload: { error: e } })
         })
         return () => {
-            cancleToken.cancel()
+            cancelToken.cancel()
         }
     }, [params, page])
 

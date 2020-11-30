@@ -11,7 +11,8 @@ function App() {
 
 
   return (
-    <Container>
+    <Container className="my-4">
+      <h1 className="mb-4">Github jobs</h1>
       {loading && <h1>Loading ...</h1>}
       {error && <h1>Error, Try Refereshing.</h1>}
       {jobs.map(job => {
